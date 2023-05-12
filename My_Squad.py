@@ -8,10 +8,8 @@ from matplotlib.figure import Figure
 from MySquadManagement import MySquadManagement
 
 
-class My_Squad(ttk.Frame):
-    def __init__(self, parent):
-        super().__init__(parent)
-        self.create_widgets()
+class My_Squad:
+    def __init__(self):
         self.data = MySquadManagement.LoadMySquad()
 
         self.Name = []
@@ -23,11 +21,6 @@ class My_Squad(ttk.Frame):
             self.Position.append(r["player_positions"])
             self.overall.append(r["overall"])
             self.Imp.append(r["player_face_url"])
-
-
-    def create_widgets(self):
-        self.btn_quit = ttk.Button(self, text="Quit", command=root.destroy)
-        self.btn_quit.grid(row=2, column=0, pady=10)
 
     def ST(self):
         ST_Name = []
@@ -108,4 +101,12 @@ class My_Squad(ttk.Frame):
             if self.Position[i][0:2]=="GK":
                 GK_Name.append(self.Name[i])
         return GK_Name
+    
+    def Overall(self):
+        Overall = []
+        Len = len(self.data)
+        for i in range(Len):
+            Dic = {self.Name[i]:self.overall[i]}
+            Overall.append(Dic)
+        return Overall
         

@@ -1,14 +1,21 @@
-from My_Squad import My_Squad
-from MySquadManagement import MySquadManagement
-import tkinter.ttk as ttk
+Name = ['a','b','c']
+overall = ['1','2','3']
+Overall = []
+Len = 3
+for i in range(Len):
+    Dic = {Name[i]:overall[i]}
+    Overall.append(Dic)
+    
+b = 0
 
-
-# Create an instance of the My_Squad class
-instance = My_Squad(ttk)  # Replace 'parent' with the appropriate parent widget
-
-# Call the ST method and store the returned list
-st_list = instance.ST()
-
-# Use the st_list in your code as needed
-for name in st_list:
-    print(name)
+selected_ST = []
+for dictionary in Overall:
+    # Check if 'key1' exists in the current dictionary
+    selected_ST.append(Nam)
+    if 'a' in dictionary:
+        b -= int(dictionary[self.selected_ST[-2]])
+        b += int(dictionary[selected_value])
+        print(self.FW_Overall)
+        print(self.selected_ST)
+        
+print(Name[-2])
