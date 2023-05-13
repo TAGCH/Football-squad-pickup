@@ -1,6 +1,5 @@
 from csv import DictReader
 import csv
-import string
 
 class MySquadManagement:
     def LoadMySquad():
