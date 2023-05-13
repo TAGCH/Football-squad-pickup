@@ -9,6 +9,7 @@ from tkinter import *
 from My_Squad import My_Squad
 from MySquadManagement import MySquadManagement
 import matplotlib.patches as mpatches
+import matplotlib.pyplot as plt
 
 class GUIElement:
     def __init__(self, master):
@@ -20,12 +21,12 @@ class GUIElement:
 class MyGUI:
     def __init__(self,master):
         self.master = master
-        master.geometry("1500x700")
+        master.geometry("1500x750")
         master.title("Football11 Squad Pickup")
         master["bg"] = "white"
 
-        self.quit_button = Button(master, "Quit", self.master.quit)
-        self.quit_button.pack()
+        #self.quit_button = Button(master, "Quit", self.master.quit)
+        #self.quit_button.pack()
 
 class Button(GUIElement):
     def __init__(self, master, text, command):
@@ -513,7 +514,7 @@ class App:
         
     #Create widgets    
     def create_widgets(self):
-        self.canvas = tk.Canvas(self.master, width=1600, height=650, bg = 'seagreen', highlightbackground= "seagreen")
+        self.canvas = tk.Canvas(self.master, width=1600, height=700, bg = 'seagreen', highlightbackground= "seagreen")
         self.canvas.pack()
         
         self.canvas.create_text(225, 50, text="My Squad", font=('Helvetica 24 bold'))
@@ -633,48 +634,69 @@ class App:
         self.GK_Com_Box.bind("<<ComboboxSelected>>", self.Select_Com_GK)
         self.canvas.create_window(1275, 600, window=self.GK_Com_Box)
         
-        self.canvas.create_rectangle(450, 0, 1050, 900, fill='white')
+        self.canvas.create_rectangle(449, 0, 1050, 2000, fill='white')
         
         #self.variable_values1 = self.Cal_Overall()
         #self.variable_values2 = self.Cal_Com_Overall()
         self.variable_values1 = [self.Cal_Overall[0],self.Cal_Overall[1],self.Cal_Overall[2],self.Cal_Overall[3]]
         self.variable_values2 = [self.Cal_Com_Overall[0],self.Cal_Com_Overall[1],self.Cal_Com_Overall[2],self.Cal_Com_Overall[3]]
+        
+        #Create the histogram data
+        instance = My_Squad()
+        data1 = instance.FW_Overall()
+        data2 = instance.MF_Overall()
+        data3 = instance.DF_Overall()
+        data4 = instance.GK_Overall()
+
+        #Create the histogram
+        fig, ax = plt.subplots(figsize=(6, 4))
+        ax.hist(data1, bins=100, alpha=0.5, label="FW")
+        ax.hist(data2, bins=100, alpha=0.5, label="MF")
+        ax.hist(data3, bins=100, alpha=0.5, label="DF")
+        ax.hist(data4, bins=100, alpha=0.5, label="GK")
+        ax.set_ylabel("Quantity", size=8)
+        ax.set_xlabel("Overall", size=8)
+        ax.set_title("Overall for all player Histograms", size=10)
+        ax.legend(loc='upper right', fontsize=8)
+        figure_canvas = FigureCanvasTkAgg(fig, master=self.canvas)
+        figure_canvas.draw()
+        figure_canvas.get_tk_widget().place(x=450, y=0)
 
         # Create a radar graph
         self.fig = Figure(figsize=(4, 4))
         self.ax = self.fig.add_subplot(222, polar=True)
         self.figure_canvas = FigureCanvasTkAgg(self.fig, master=self.master)
-        self.figure_canvas.get_tk_widget().place(x=465, y=370)
+        self.figure_canvas.get_tk_widget().place(x=465, y=420)
 
         self.plot_radar_graph()
             
         update_button = tk.Button(self.master, text="Compare", command=self.update_value)
-        update_button.place(x=720, y=600)
+        update_button.place(x=725, y=650)
+        
+        quit_button = tk.Button(self.master ,text = "Quit", command = self.master.destroy)
+        quit_button.place(x=737, y=700)
 
         #self.canvas.create_oval(50, 50, 150, 150, fill='white')
 
     def plot_radar_graph(self):
         self.ax.clear()
 
-        # Define the variables and their values
         categories = ['Attack', 'Passing', 'Defend', 'Protect']
         values1 = self.variable_values1.copy()
         values2 = self.variable_values2.copy()
 
-        # Duplicate the first value to complete the loop
         values1.append(values1[0])
         values2.append(values2[0])
 
-        # Calculate angles for each variable
         angles = [n / float(len(categories)) * 2 * 3.14159 for n in range(len(categories))]
         angles += angles[:1]
 
-        red_line = self.ax.plot(angles, values1, marker='o', linestyle='-', color='red', label='My Squad')
-        self.ax.fill(angles, values1, facecolor='red', alpha=0.25)
+        brown2_line = self.ax.plot(angles, values1, marker='o', linestyle='-', color='#EE3B3B', label='My Squad')
+        self.ax.fill(angles, values1, facecolor='#EE3B3B', alpha=0.25)
 
-        yellow_line = self.ax.plot(angles, values2, marker='o', linestyle='-', color='yellow', label='Com Squad')
-        self.ax.fill(angles, values2, facecolor='yellow', alpha=0.25)
-        self.ax.legend(handles=[red_line[0], yellow_line[0]], loc='upper left', bbox_to_anchor=(-0.7, 1), fontsize='xx-small')
+        aquamarine1_line = self.ax.plot(angles, values2, marker='o', linestyle='-', color='#7FFFD4', label='Com Squad')
+        self.ax.fill(angles, values2, facecolor='#7FFFD4', alpha=0.25)
+        self.ax.legend(handles=[brown2_line[0], aquamarine1_line[0]], loc='upper left', bbox_to_anchor=(-0.7, 1), fontsize='xx-small')
 
         self.ax.set_xticks(angles[:-1])
         self.ax.set_xticklabels(categories)
@@ -682,10 +704,11 @@ class App:
         self.ax.set_yticks([25, 50, 75, 100])
 
         self.ax.set_title('Overall Compare', size=10)
-        self.ax.set_facecolor('lightgray')
+        #self.ax.set_facecolor('lightgray')
 
         self.figure_canvas.draw()
 
+    #Update radar graph
     def update_value(self):
         self.variable_values1[0]=self.FW_Overall//3
         self.variable_values1[1]=self.MF_Overall//3

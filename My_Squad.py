@@ -109,4 +109,36 @@ class My_Squad:
             Dic = {self.Name[i]:self.overall[i]}
             Overall.append(Dic)
         return Overall
+    
+    def FW_Overall(self):
+        FW = []
+        Len = len(self.data)
+        for i in range(Len):
+            if self.Position[i][0:2]=="ST" or self.Position[i][0:2]=="LW" or self.Position[i][0:2]=="RW" or self.Position[i][0:2]=="CF":
+                FW.append(int(self.overall[i]))
+        return FW
+    
+    def MF_Overall(self):
+        MF = []
+        Len = len(self.data)
+        for i in range(Len):
+            if self.Position[i][0:2]=="CM" or self.Position[i][0:3]=="CDM" or self.Position[i][0:3]=="CAM" or self.Position[i][0:2]=="LM" or self.Position[i][0:2]=="RM":
+                MF.append(int(self.overall[i]))
+        return MF
+    
+    def DF_Overall(self):
+        DF = []
+        Len = len(self.data)
+        for i in range(Len):
+            if self.Position[i][0:2]=="CB" or self.Position[i][0:2]=="RB" or self.Position[i][0:2]=="LB":
+                DF.append(int(self.overall[i]))
+        return DF
+    
+    def GK_Overall(self):
+        GK = []
+        Len = len(self.data)
+        for i in range(Len):
+            if self.Position[i][0:2]=="GK":
+                GK.append(int(self.overall[i]))
+        return GK
         
