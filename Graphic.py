@@ -8,6 +8,7 @@ from matplotlib.figure import Figure
 from tkinter import *
 from My_Squad import My_Squad
 from MySquadManagement import MySquadManagement
+import matplotlib.patches as mpatches
 
 class GUIElement:
     def __init__(self, master):
@@ -35,7 +36,7 @@ class Button(GUIElement):
     def pack(self):
         self.button = tk.Button(self.master, text=self.text, command=self.command)
         self.button.pack()
-
+    
 class App:
     def __init__(self, master):
         self.master = master
@@ -54,9 +55,6 @@ class App:
         self.GK = instance.GK()
         self.overall = instance.Overall()
         
-        #self.select_CM = ''
-        #self.select_CB = '' 
-        
         self.Pre_ST_power = 0
         self.Pre_LW_power = 0
         self.Pre_RW_power = 0
@@ -68,7 +66,6 @@ class App:
         self.Pre_CB_power = 0
         self.Pre_CB2_power = 0
         self.Pre_GK_power = 0
-
         
         self.selected_ST = []
         self.selected_RW = []
@@ -86,8 +83,41 @@ class App:
         self.MF_Overall = 0
         self.DF_Overall = 0
         self.GK_Overall = 0
+        
+        self.PreCom_ST_power = 0
+        self.PreCom_LW_power = 0
+        self.PreCom_RW_power = 0
+        self.PreCom_CM_power = 0
+        self.PreCom_CM2_power = 0
+        self.PreCom_CDM_power = 0
+        self.PreCom_RB_power = 0
+        self.PreCom_LB_power = 0
+        self.PreCom_CB_power = 0
+        self.PreCom_CB2_power = 0
+        self.PreCom_GK_power = 0
+
+        
+        self.selected_Com_ST = []
+        self.selected_Com_RW = []
+        self.selected_Com_LW = []
+        self.selected_Com_CM = []
+        self.selected_Com_CM2 = []
+        self.selected_Com_CDM = []
+        self.selected_Com_RB = []
+        self.selected_Com_LB = []
+        self.selected_Com_CB = []
+        self.selected_Com_CB2 = []
+        self.selected_Com_GK = []
+
+        self.FW_Com_Overall = 0
+        self.MF_Com_Overall = 0
+        self.DF_Com_Overall = 0
+        self.GK_Com_Overall = 0
+        
+        self.Cal_Overall = [self.FW_Overall, self.MF_Overall, self.DF_Overall, self.GK_Overall]
+        self.Cal_Com_Overall = [self.FW_Com_Overall, self.MF_Com_Overall, self.DF_Com_Overall, self.GK_Com_Overall]
     
-    #Select
+    #Select My Squad
     def Select_ST(self, event):
         selected_value = event.widget.get()
         self.selected_ST.append(selected_value)
@@ -102,7 +132,7 @@ class App:
                     self.FW_Overall -= self.Pre_ST_power
                     self.FW_Overall += int(dictionary[selected_value])
                     self.Pre_ST_power = int(dictionary[selected_value])
-                    print(self.FW_Overall)
+                    print(self.Cal_Overall[0])
         print(self.selected_ST)
         
     def Select_RW(self, event):
@@ -284,15 +314,208 @@ class App:
                     print(self.GK_Overall)
         print(self.selected_GK)
         
+    #Select Com
+    def Select_Com_ST(self, event):
+        selected_value = event.widget.get()
+        self.selected_Com_ST.append(selected_value)
+        if len(self.selected_Com_ST) <= 1:
+            for dictionary in self.overall:
+                if selected_value in dictionary:
+                    self.FW_Com_Overall += int(dictionary[selected_value])
+                    self.PreCom_ST_power=int(dictionary[selected_value])
+        else:
+            for dictionary in self.overall:
+                if selected_value in dictionary:
+                    self.FW_Com_Overall -= self.PreCom_ST_power
+                    self.FW_Com_Overall += int(dictionary[selected_value])
+                    self.PreCom_ST_power = int(dictionary[selected_value])
+                    print(self.FW_Com_Overall)
+        print(self.selected_Com_ST)
+        
+    def Select_Com_RW(self, event):
+        selected_value = event.widget.get()
+        self.selected_Com_RW.append(selected_value)
+        if len(self.selected_Com_RW) <= 1:
+            for dictionary in self.overall:
+                if selected_value in dictionary:
+                    self.FW_Com_Overall += int(dictionary[selected_value])
+                    self.PreCom_RW_power=int(dictionary[selected_value])
+        else:
+            for dictionary in self.overall:
+                if selected_value in dictionary:
+                    self.FW_Com_Overall -= self.PreCom_RW_power
+                    self.FW_Com_Overall += int(dictionary[selected_value])
+                    self.PreCom_RW_power = int(dictionary[selected_value])
+                    print(self.FW_Com_Overall)
+        print(self.selected_Com_RW)
+        
+    def Select_Com_LW(self, event):
+        selected_value = event.widget.get()
+        self.selected_LW.append(selected_value)
+        if len(self.selected_Com_LW) <= 1:
+            for dictionary in self.overall:
+                if selected_value in dictionary:
+                    self.FW_Com_Overall += int(dictionary[selected_value])
+                    self.PreCom_LW_power=int(dictionary[selected_value])
+        else:
+            for dictionary in self.overall:
+                if selected_value in dictionary:
+                    self.FW_Com_Overall -= self.PreCom_LW_power
+                    self.FW_Com_Overall += int(dictionary[selected_value])
+                    self.PreCom_LW_power = int(dictionary[selected_value])
+                    print(self.FW_Com_Overall)
+        print(self.selected_Com_LW)
+        
+    def Select_Com_CM(self, event):
+        selected_value = event.widget.get()
+        self.selected_Com_CM.append(selected_value)
+        if len(self.selected_Com_CM) <= 1:
+            for dictionary in self.overall:
+                if selected_value in dictionary:
+                    self.MF_Com_Overall += int(dictionary[selected_value])
+                    self.PreCom_CM_power=int(dictionary[selected_value])
+                    '''
+                    self.CM.remove(selected_value)
+                    self.select_CM = selected_value
+                    '''
+        else:
+            for dictionary in self.overall:
+                if selected_value in dictionary:
+                    self.MF_Com_Overall -= self.PreCom_CM_power
+                    self.MF_Com_Overall += int(dictionary[selected_value])
+                    self.PreCom_CM_power = int(dictionary[selected_value])
+                    '''
+                    self.CM.append(self.select_CM)
+                    self.CM.remove(selected_value)
+                    self.select_CM = selected_value
+                    '''
+                    print(self.MF_Com_Overall)
+        print(self.selected_Com_CM)
+        
+    def Select_Com_CM2(self, event):
+        selected_value = event.widget.get()
+        self.selected_Com_CM2.append(selected_value)
+        if len(self.selected_Com_CM) <= 1:
+            for dictionary in self.overall:
+                if selected_value in dictionary:
+                    self.MF_Com_Overall += int(dictionary[selected_value])
+                    self.PreCom_CM2_power=int(dictionary[selected_value])
+        else:
+            for dictionary in self.overall:
+                if selected_value in dictionary:
+                    self.MF_Com_Overall -= self.PreCom_CM2_power
+                    self.MF_Com_Overall += int(dictionary[selected_value])
+                    self.PreCom_CM2_power = int(dictionary[selected_value])
+                    print(self.MF_Com_Overall)
+        print(self.selected_Com_CM2)
+        
+    def Select_Com_CDM(self, event):
+        selected_value = event.widget.get()
+        self.selected_Com_CDM.append(selected_value)
+        if len(self.selected_Com_CDM) <= 1:
+            for dictionary in self.overall:
+                if selected_value in dictionary:
+                    self.MF_Com_Overall += int(dictionary[selected_value])
+                    self.PreCom_CDM_power=int(dictionary[selected_value])
+        else:
+            for dictionary in self.overall:
+                if selected_value in dictionary:
+                    self.MF_Com_Overall -= self.PreCom_CDM_power
+                    self.MF_Com_Overall += int(dictionary[selected_value])
+                    self.PreCom_CDM_power = int(dictionary[selected_value])
+                    print(self.MF_Com_Overall)
+        print(self.selected_Com_CDM)
+        
+    def Select_Com_RB(self, event):
+        selected_value = event.widget.get()
+        self.selected_Com_RB.append(selected_value)
+        if len(self.selected_Com_RB) <= 1:
+            for dictionary in self.overall:
+                if selected_value in dictionary:
+                    self.DF_Com_Overall += int(dictionary[selected_value])
+                    self.PreCom_RB_power=int(dictionary[selected_value])
+        else:
+            for dictionary in self.overall:
+                if selected_value in dictionary:
+                    self.DF_Com_Overall -= self.PreCom_RB_power
+                    self.DF_Com_Overall += int(dictionary[selected_value])
+                    self.PreCom_RB_power = int(dictionary[selected_value])
+                    print(self.DF_Com_Overall)
+        print(self.selected_Com_RB)
+        
+    def Select_Com_LB(self, event):
+        selected_value = event.widget.get()
+        self.selected_Com_LB.append(selected_value)
+        if len(self.selected_Com_LB) <= 1:
+            for dictionary in self.overall:
+                if selected_value in dictionary:
+                    self.DF_Com_Overall += int(dictionary[selected_value])
+                    self.PreCom_LB_power=int(dictionary[selected_value])
+        else:
+            for dictionary in self.overall:
+                if selected_value in dictionary:
+                    self.DF_Com_Overall -= self.PreCom_LB_power
+                    self.DF_Com_Overall += int(dictionary[selected_value])
+                    self.PreCom_LB_power = int(dictionary[selected_value])
+                    print(self.DF_Com_Overall)
+        print(self.selected_Com_LB)
+        
+    def Select_Com_CB(self, event):
+        selected_value = event.widget.get()
+        self.selected_Com_CB.append(selected_value)
+        if len(self.selected_Com_CB) <= 1:
+            for dictionary in self.overall:
+                if selected_value in dictionary:
+                    self.DF_Com_Overall += int(dictionary[selected_value])
+                    self.PreCom_CB_power=int(dictionary[selected_value])
+        else:
+            for dictionary in self.overall:
+                if selected_value in dictionary:
+                    self.DF_Com_Overall -= self.PreCom_CB_power
+                    self.DF_Com_Overall += int(dictionary[selected_value])
+                    self.PreCom_CB_power = int(dictionary[selected_value])
+                    print(self.DF_Com_Overall)
+        print(self.selected_Com_CB)
+        
+    def Select_Com_CB2(self, event):
+        selected_value = event.widget.get()
+        self.selected_Com_CB2.append(selected_value)
+        if len(self.selected_Com_CB2) <= 1:
+            for dictionary in self.overall:
+                if selected_value in dictionary:
+                    self.DF_Com_Overall += int(dictionary[selected_value])
+                    self.PreCom_CB2_power=int(dictionary[selected_value])
+        else:
+            for dictionary in self.overall:
+                if selected_value in dictionary:
+                    self.DF_Com_Overall -= self.PreCom_CB2_power
+                    self.DF_Com_Overall += int(dictionary[selected_value])
+                    self.PreCom_CB2_power = int(dictionary[selected_value])
+                    print(self.DF_Com_Overall)
+        print(self.selected_Com_CB2)
+        
+    def Select_Com_GK(self, event):
+        selected_value = event.widget.get()
+        self.selected_Com_GK.append(selected_value)
+        if len(self.selected_Com_GK) <= 1:
+            for dictionary in self.overall:
+                if selected_value in dictionary:
+                    self.GK_Com_Overall += int(dictionary[selected_value])
+                    self.PreCom_GK_power=int(dictionary[selected_value])
+        else:
+            for dictionary in self.overall:
+                if selected_value in dictionary:
+                    self.GK_Com_Overall -= self.PreCom_GK_power
+                    self.GK_Com_Overall += int(dictionary[selected_value])
+                    self.PreCom_GK_power = int(dictionary[selected_value])
+                    print(self.GK_Com_Overall)
+        print(self.selected_Com_GK)
+        
     #Create widgets    
     def create_widgets(self):
         self.canvas = tk.Canvas(self.master, width=1600, height=650, bg = 'seagreen', highlightbackground= "seagreen")
         self.canvas.pack()
-
-        choices = ['GB', 'MB', 'KB', 'a', 'b', 'c', 'd', 'e']
-        variable = tk.StringVar(self.master)
-        variable.set('GB')
-
+        
         self.canvas.create_text(225, 50, text="My Squad", font=('Helvetica 24 bold'))
         self.canvas.pack()
 
@@ -354,51 +577,122 @@ class App:
         #Competitor
         self.canvas.create_text(1275, 50, text="Competitor Squad", font=('Helvetica 24 bold'))
         self.canvas.pack()
+        
         #FW
-        self.w = ttk.Combobox(self.master, values=choices, textvariable=variable, width=10)
-        self.canvas.create_window(1275, 150, window=self.w)
+        self.ST_Com_Box = ttk.Combobox(self.master, values=self.ST, width=10)
+        self.ST_Com_Box.bind("<<ComboboxSelected>>", self.Select_Com_ST)
+        self.canvas.create_window(1275, 150, window=self.ST_Com_Box)
 
         #LW
-        self.w = ttk.Combobox(self.master, values=choices, textvariable=variable, width=10)
-        self.canvas.create_window(1435, 195, window=self.w)
+        self.LW_Com_Box = ttk.Combobox(self.master, values=self.LW, width=10)
+        self.LW_Com_Box.bind("<<ComboboxSelected>>", self.Select_Com_LW)
+        self.canvas.create_window(1115, 195, window=self.LW_Com_Box)
 
         #RW
-        self.w = ttk.Combobox(self.master, values=choices, textvariable=variable, width=10)
-        self.canvas.create_window(1115, 195, window=self.w)
+        self.RW_Com_Box = ttk.Combobox(self.master, values=self.RW, width=10)
+        self.RW_Com_Box.bind("<<ComboboxSelected>>", self.Select_Com_RW)
+        self.canvas.create_window(1435, 195, window=self.RW_Com_Box)
 
         #CM
-        self.w = ttk.Combobox(self.master, values=choices, textvariable=variable, width=10)
-        self.canvas.create_window(1375, 300, window=self.w)
+        self.CM_Com_Box = ttk.Combobox(self.master, values=self.CM, width=10)
+        self.CM_Com_Box.bind("<<ComboboxSelected>>", self.Select_Com_CM)
+        self.canvas.create_window(1375, 300, window=self.CM_Com_Box)
 
         #CM
-        self.w = ttk.Combobox(self.master, values=choices, textvariable=variable, width=10)
-        self.canvas.create_window(1175, 300, window=self.w)
+        self.CM2_Com_Box = ttk.Combobox(self.master, values=self.CM, width=10)
+        self.CM2_Com_Box.bind("<<ComboboxSelected>>", self.Select_Com_CM2)
+        self.canvas.create_window(1175, 300, window=self.CM2_Com_Box)
 
         #CDM
-        self.w = ttk.Combobox(self.master, values=choices, textvariable=variable, width=10)
-        self.canvas.create_window(1275, 400, window=self.w)
+        self.CDM_Com_Box = ttk.Combobox(self.master, values=self.CDM, width=10)
+        self.CDM_Com_Box.bind("<<ComboboxSelected>>", self.Select_Com_CDM)
+        self.canvas.create_window(1275, 400, window=self.CDM_Com_Box)
 
-        ##LB
-        self.w = ttk.Combobox(self.master, values=choices, textvariable=variable, width=10)
-        self.canvas.create_window(1425, 425, window=self.w)
+        #LB
+        self.LB_Com_Box = ttk.Combobox(self.master, values=self.LB, width=10)
+        self.LB_Com_Box.bind("<<ComboboxSelected>>", self.Select_Com_LB)
+        self.canvas.create_window(1125, 425, window=self.LB_Com_Box)
 
         #RB
-        self.w = ttk.Combobox(self.master, values=choices, textvariable=variable, width=10)
-        self.canvas.create_window(1125, 425, window=self.w)
+        self.RB_Com_Box = ttk.Combobox(self.master, values=self.RB, width=10)
+        self.RB_Com_Box.bind("<<ComboboxSelected>>", self.Select_Com_RB)
+        self.canvas.create_window(1425, 425, window=self.RB_Com_Box)
 
         #CB
-        self.w = ttk.Combobox(self.master, values=choices, textvariable=variable, width=10)
-        self.canvas.create_window(1350, 500, window=self.w)
+        self.CB_Com_Box = ttk.Combobox(self.master, values=self.CB, width=10)
+        self.CB_Com_Box.bind("<<ComboboxSelected>>", self.Select_Com_CB)
+        self.canvas.create_window(1350, 500, window=self.CB_Com_Box)
 
         #CB
-        self.w = ttk.Combobox(self.master, values=choices, textvariable=variable, width=10)
-        self.canvas.create_window(1200, 500, window=self.w)
+        self.CB2_Com_Box = ttk.Combobox(self.master, values=self.CB, width=10)
+        self.CB2_Com_Box.bind("<<ComboboxSelected>>", self.Select_Com_CB2)
+        self.canvas.create_window(1200, 500, window=self.CB2_Com_Box)
 
         #GK
-        self.w = ttk.Combobox(self.master, values=choices, textvariable=variable, width=10)
-        self.canvas.create_window(1275, 600, window=self.w)
+        self.GK_Com_Box = ttk.Combobox(self.master, values=self.GK, width=10)
+        self.GK_Com_Box.bind("<<ComboboxSelected>>", self.Select_Com_GK)
+        self.canvas.create_window(1275, 600, window=self.GK_Com_Box)
         
         self.canvas.create_rectangle(450, 0, 1050, 900, fill='white')
+        
+        #self.variable_values1 = self.Cal_Overall()
+        #self.variable_values2 = self.Cal_Com_Overall()
+        self.variable_values1 = [self.Cal_Overall[0],self.Cal_Overall[1],self.Cal_Overall[2],self.Cal_Overall[3]]
+        self.variable_values2 = [self.Cal_Com_Overall[0],self.Cal_Com_Overall[1],self.Cal_Com_Overall[2],self.Cal_Com_Overall[3]]
+
+        # Create a radar graph
+        self.fig = Figure(figsize=(4, 4))
+        self.ax = self.fig.add_subplot(222, polar=True)
+        self.figure_canvas = FigureCanvasTkAgg(self.fig, master=self.master)
+        self.figure_canvas.get_tk_widget().place(x=465, y=370)
+
+        self.plot_radar_graph()
+            
+        update_button = tk.Button(self.master, text="Compare", command=self.update_value)
+        update_button.place(x=720, y=600)
 
         #self.canvas.create_oval(50, 50, 150, 150, fill='white')
-        
+
+    def plot_radar_graph(self):
+        self.ax.clear()
+
+        # Define the variables and their values
+        categories = ['Attack', 'Passing', 'Defend', 'Protect']
+        values1 = self.variable_values1.copy()
+        values2 = self.variable_values2.copy()
+
+        # Duplicate the first value to complete the loop
+        values1.append(values1[0])
+        values2.append(values2[0])
+
+        # Calculate angles for each variable
+        angles = [n / float(len(categories)) * 2 * 3.14159 for n in range(len(categories))]
+        angles += angles[:1]
+
+        red_line = self.ax.plot(angles, values1, marker='o', linestyle='-', color='red', label='My Squad')
+        self.ax.fill(angles, values1, facecolor='red', alpha=0.25)
+
+        yellow_line = self.ax.plot(angles, values2, marker='o', linestyle='-', color='yellow', label='Com Squad')
+        self.ax.fill(angles, values2, facecolor='yellow', alpha=0.25)
+        self.ax.legend(handles=[red_line[0], yellow_line[0]], loc='upper left', bbox_to_anchor=(-0.7, 1), fontsize='xx-small')
+
+        self.ax.set_xticks(angles[:-1])
+        self.ax.set_xticklabels(categories)
+
+        self.ax.set_yticks([25, 50, 75, 100])
+
+        self.ax.set_title('Overall Compare', size=10)
+        self.ax.set_facecolor('lightgray')
+
+        self.figure_canvas.draw()
+
+    def update_value(self):
+        self.variable_values1[0]=self.FW_Overall//3
+        self.variable_values1[1]=self.MF_Overall//3
+        self.variable_values1[2]=self.DF_Overall//4
+        self.variable_values1[3]=self.GK_Overall
+        self.variable_values2[0]=self.FW_Com_Overall//3
+        self.variable_values2[1]=self.MF_Com_Overall//3
+        self.variable_values2[2]=self.DF_Com_Overall//4
+        self.variable_values2[3]=self.GK_Com_Overall
+        self.plot_radar_graph()
