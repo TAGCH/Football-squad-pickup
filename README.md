@@ -1,6 +1,6 @@
-#FOOTBALL11 SQUAD PICKUP
+# FOOTBALL11 SQUAD PICKUP
 
-####Decription
+#### Decription
 For this project, I make a football squad pickup program. In this program, you can select your own football player for each position in your squad and also can select the football player for the competitor squad. Each player, they have an overall stat. After you select your football player, you can click compare button that places in the middle of the screen then the program will calculate the overall for 4 topics namely Attack, Passing, Defend and Protect then it will show the compare result in the radar graph.
 
 * Attack => ST, CF, RW, LW
@@ -10,9 +10,9 @@ For this project, I make a football squad pickup program. In this program, you c
 
 In addition, in the middle top of UI, I represent the overall stat from the example group of football players in terms of a histogram graph. 
 
-#Instrution
+# Instrution
 
-####Step
+#### Step
 1. Click on each combo box to select your football player.
 ![screen](images/Select.png)
 2. Click on Compare button to compare the overall stat. The result will show in a radar graph.
@@ -22,7 +22,7 @@ In addition, in the middle top of UI, I represent the overall stat from the exam
 4. If you want to quit the program, click on the Quit button at the bottom of the program.
 ![screen](images/Quit.png)
 
-#Code
+# Code
 * `main.py` : In this file, I use to do mainloop and run program.
 * `MySquadManagement.py` : In this file, I use to load the data from `player_22.csv` file. It return list of data.
 * `My_Squad.py` : In this file, I use to separate the data from the `MySquadManagement` list and return list of each data.
