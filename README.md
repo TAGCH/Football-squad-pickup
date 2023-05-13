@@ -30,5 +30,4 @@ In addition, in the middle top of UI, I represent the overall stat from the exam
 * `player_22.csv` : The data sort. [link](https://www.kaggle.com/datasets/stefanoleone992/fifa-22-complete-player-dataset) 
 
 # Diagram
->>>>>>> 4ad2e7523d1c6dbfcf915905a702d198211010ea
 ![screen](images/Project_diagram.png)
